@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "143656674173",
+    "firebase_url": "https://livroemprestatorandroid.firebaseio.com",
+    "project_id": "livroemprestatorandroid",
+    "storage_bucket": "livroemprestatorandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143656674173:android:9d14d7982dde2b19",
+        "android_client_info": {
+          "package_name": "br.com.m3rcurio.livroemprestator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143656674173-i38mgpmhlk9j3hb4e6srocrm4d3h7r8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.m3rcurio.livroemprestator",
+            "certificate_hash": "352c9cd79e5ea4910d4dedbbda8fd52c7401503a"
+          }
+        },
+        {
+          "client_id": "143656674173-iqjjn1c55vv0andqcvkji82o2cglvgst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA82iijUSQokZqd3bhbt9_q_16FD5aPAJ0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143656674173-iqjjn1c55vv0andqcvkji82o2cglvgst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

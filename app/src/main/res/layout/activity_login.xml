@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="br.com.m3rcurio.livroemprestator.LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email" />
+
+    <EditText
+        android:id="@+id/editLoginEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Senha" />
+
+    <EditText
+        android:id="@+id/editLoginSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btLoginEntrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="fazerLogin"
+        android:text="Entrar" />
+
+    <Button
+        android:id="@+id/btLoginCriarUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="vaiParaCriarUsuario"
+        android:text="Criar Usuário" />
+
+    <Button
+        android:id="@+id/btLoginGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="loginGoogle"
+        android:text="GOOGLE" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btLoginFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
+</LinearLayout>
