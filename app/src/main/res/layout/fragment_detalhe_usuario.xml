@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    tools:context=".DetalheUsuarioFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar_perfilUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/colorAccent"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <ImageView
+        android:id="@+id/listaLivroImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/lblPerfilApelido"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="Apelido"
+            android:textColor="@color/colorAccent"
+            />
+
+        <TextView
+            android:id="@+id/txtPerfilApelido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apelido"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/lblPerfilNome"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/txtPerfilNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:textColorHint="@color/colorAccent"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/lblPerfilEmail"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/txtPerfilEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:textStyle="bold"
+            android:hint="email"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sair"
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="294dp"
+        android:onClick="sair"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

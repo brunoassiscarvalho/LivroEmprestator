@@ -2,4 +2,24 @@
     <string name="app_name">Livro Emprestator</string>
     <string name="facebook_app_id">208003403067459</string>
     <string name="fb_login_protocol_scheme">fb208003403067459</string>
+    <string name="livros">Livros</string>
+    <string name="usuarios">Usuários</string>
+    <string name="iteracoes">Iterações</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="perfil">Perfil</string>
+    <string name="estante">Estante</string>
+    <string name="opcoes">Opções</string>
+    <string-array name="tipoIteracoes">
+        <item/>
+        <item>Pediu Emprestado</item>
+        <item>Emprestou</item>
+        <item>Recebeu</item>
+        <item>Quer Devolver</item>
+        <item>Devolveu</item>
+    </string-array>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detalhe_usuario">DetalheUsuarioActivity</string>
 </resources>

@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorAccent"
+    android:padding="20dp"
     tools:context="br.com.m3rcurio.livroemprestator.LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="50dp"
+        app:srcCompat="@drawable/ic_logo_livroemprestator" />
 
     <TextView
         android:layout_width="match_parent"

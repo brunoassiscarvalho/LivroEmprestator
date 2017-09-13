@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    tools:context="br.com.m3rcurio.livroemprestator.IteracoesFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:text="User Name"
+        android:textColor="@color/colorAccent"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <include layout="@layout/item_lista_usuarios"/>
+
+    <TextView
+        android:id="@+id/iteracaoDescricao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:text="User Name"
+        android:textColor="@color/colorAccent"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <include layout="@layout/item_lista_livro" />
+
+    <LinearLayout
+        android:id="@+id/iteracoesBarraBotoes"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btIteracoesConfirma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Confirmar"
+            android:layout_gravity="center_vertical" />
+        <Button
+            android:id="@+id/btIteracoesCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Cancelar"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/iteracoesBarraResposta"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/iteracaoResposta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+
+            android:text="Confirmado!"
+            android:textColor="@color/colorAccent"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <Button
+            android:id="@+id/btIteracoesOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Ok"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+</LinearLayout>

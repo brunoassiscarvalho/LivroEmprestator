@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_item1"
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="@string/livros"/>
+    <item
+        android:id="@+id/action_item2"
+        android:icon="@drawable/ic_people_black_24dp"
+        android:title="@string/usuarios"/>
+    <item
+        android:id="@+id/action_item3"
+        android:icon="@drawable/ic_loop_black_24dp"
+        android:title="@string/iteracoes"/>
+    <item
+        android:id="@+id/action_item4"
+        android:icon="@drawable/com_facebook_button_send_icon_white"
+        android:title="Chat"/>
+</menu>

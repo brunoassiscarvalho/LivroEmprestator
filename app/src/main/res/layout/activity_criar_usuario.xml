@@ -4,12 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="br.com.m3rcurio.livroemprestator.CriarUsuarioActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/listaLivroImage"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/txtCadastroUsuarioApelido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text="Apelido" />
+
+    <EditText
+        android:id="@+id/editCadastroUsuarioApelido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apelido"
+        android:textColorHint="@color/colorAccent"
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
         android:text="Nome"  />
 
     <EditText
@@ -17,12 +42,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nome"
+        android:textColorHint="@color/colorAccent"
         android:inputType="textPersonName" />
 
     <TextView
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
         android:text="Email" />
 
     <EditText
@@ -30,12 +57,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:textColorHint="@color/colorAccent"
         android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/txtCadastroUsuarioSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
         android:text="Senha" />
 
     <EditText
@@ -43,6 +72,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Senha"
+        android:textColorHint="@color/colorAccent"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/txtCadastroUsuarioSenha2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:text="Repita a Senha" />
+
+    <EditText
+        android:id="@+id/editCadastroUsuarioSenha2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:textColorHint="@color/colorAccent"
         android:inputType="textPassword" />
 
     <Button

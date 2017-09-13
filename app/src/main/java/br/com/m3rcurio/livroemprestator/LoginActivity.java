@@ -1,13 +1,10 @@
 package br.com.m3rcurio.livroemprestator;
-
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,20 +12,15 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -37,6 +29,13 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import br.com.m3rcurio.livroemprestator.model.Usuarios;
 
 public class LoginActivity extends AppCompatActivity implements  GoogleApiClient.OnConnectionFailedListener{
     private String TAG = "LOGIN";
@@ -47,7 +46,8 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
     CallbackManager mCallbackManager;
-
+    private Usuarios usuarioLogado;
+    private String teste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +66,24 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        //firebase
+        //firebase - verifica se o usuario está logado
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+
                     Log.d(TAG, "Usuario Logado:" + user.getUid());
-                    Intent intent = new Intent(getBaseContext(), PerfilUsuarioActivity.class);
+                    Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+
+                    DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
+                    usuarioFireBase.setValue(usuario);
+                    //recuperaDadosUsuario(usuario.getId(), usuarioFireBase);
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("usuarioLogado", usuario);
+                    intent.putExtra("itemSelecionado", 1);
                     startActivity(intent);
+
                 } else {
                     Log.d(TAG, "Usuario Não Logado");
 
@@ -138,11 +147,18 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete( Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Usuario logado com email: "+ email);
+                            //salva usuario na lista
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getBaseContext(), PerfilUsuarioActivity.class);
+                            Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
+                            usuarioFireBase.setValue(usuario);
+                            // vai para a main
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            intent.putExtra("usuarioLogado", usuario);
+                            intent.putExtra("itemSelecionado", 1);
                             startActivity(intent);
                         } else {
                             Log.w(TAG, "Falha no login com email", task.getException());
@@ -164,19 +180,24 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "Sucesso Firebase com google:" + task.isSuccessful());
-                        if (!task.isSuccessful()) {
+                    public void onComplete( Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Sucesso Firebase com google:" + task.isSuccessful());
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
+                            usuarioFireBase.setValue(usuario);
+                        }else{
                             Log.w(TAG, "Insucesso Firebase com google", task.getException());
-                            Toast.makeText(LoginActivity.this, "Falhou na autenticação",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Falhou na autenticação", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
@@ -188,10 +209,13 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Logado no Facebook");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
+                            usuarioFireBase.setValue(usuario);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "Deslogado do Facebook", task.getException());
@@ -205,7 +229,6 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         //retorno google
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -218,4 +241,27 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
         }
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+    public void recuperaDadosUsuario(String idUsuario, DatabaseReference usuarioFireBase){
+
+        final Usuarios[] usuario = new Usuarios[1];
+        usuarioFireBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                teste = dataSnapshot.getValue().toString();
+                Log.e(TAG, "usuario recupera: "+teste);
+
+
+                //notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        // usuarioLogado = usuario[0];
+        //Log.e(TAG, "usuario 2: "+usuarioLogado.getEmail());
+    }
+
 }
