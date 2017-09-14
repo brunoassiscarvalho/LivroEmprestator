@@ -74,14 +74,6 @@ public class MainActivity extends AppCompatActivity {
         Intent it = getIntent();
         it.putExtra("interacao", interacao);
         itemSelecionado = (int) it.getSerializableExtra("itemSelecionado");
-        usuarioLogado = (Usuarios) it.getSerializableExtra("usuarioLogado");
-
-       /* Gson gson = new Gson();
-        String jsonInString = (String) it.getSerializableExtra("usuarioLogado");
-
-        Log.e(TAG,"TEST"+ (String) it.getSerializableExtra("usuarioLogado"));
-        usuarioLogado = gson.fromJson(jsonInString, Usuarios.class);*/
-        Log.e(TAG,"TEST COnvertido: "+ usuarioLogado.getEmail());
 
         selecionarItem(itemSelecionado);
         disableShiftMode(bottomNavigationView);

@@ -1,6 +1,7 @@
 package br.com.m3rcurio.livroemprestator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +33,7 @@ public class ListaIteracoesFragment extends Fragment {
     private ListaInteracoesRecyclerViewAdapter recycleViewAdapter;
     private DatabaseReference bancoDados;
     private String[] tipoIteracoes;
+
 
     public ListaIteracoesFragment() {
         // Required empty public constructor
@@ -58,9 +62,9 @@ public class ListaIteracoesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        bancoDados = FirebaseDatabase.getInstance().getReference().child("listaInteracoes");
+        bancoDados = FirebaseDatabase.getInstance().getReference().child("interacaoPorUsuario").child(user.getUid());
         bancoDados.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -97,7 +101,7 @@ public class ListaIteracoesFragment extends Fragment {
         public ImageView usuarioImagem;
         public TextView descricaoTipoInteracao;
         public ImageView livroImagem;
-        public Interacoes interacoes;
+        public Interacoes interacao;
 
         public ListaInteracoesViewHolder(View itemView) {
             super(itemView);
@@ -113,12 +117,10 @@ public class ListaIteracoesFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-           /* Intent intent = new Intent(ListaLivrosFragment.this.getActivity(), DetalheLivroActivity.class);
-            // Log.e(TAG,"Livro "+this.livro.getTitulo() +" / Usuario "+interacao.getUsuario().getNome());
-            interacao.setLivro(livro.getId());
-            intent.putExtra("interacao", interacao);
-            intent.putExtra("rota",rota);
-            startActivity(intent);*/
+            Intent intent = new Intent(ListaIteracoesFragment.this.getActivity(), BasicaActivity.class);
+            intent.putExtra("interacao",interacao);
+            intent.putExtra("tipoTela","iteracoes");
+            startActivity(intent);
         }
     }
 
@@ -141,7 +143,7 @@ public class ListaIteracoesFragment extends Fragment {
         public void onBindViewHolder(final ListaIteracoesFragment.ListaInteracoesViewHolder holder, int position) {
             Interacoes interacoes = listaIteracoes.get(position);
             holder.descricaoTipoInteracao.setText(tipoIteracoes[interacoes.getStatus()]);
-            holder.interacoes = interacoes;
+            holder.interacao = interacoes;
         }
 
         @Override

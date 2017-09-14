@@ -48,6 +48,11 @@
         <activity android:name=".UsuarioTagsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".BasicaActivity" />
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:process=":remote" />
+
     </application>
 
 </manifest>
