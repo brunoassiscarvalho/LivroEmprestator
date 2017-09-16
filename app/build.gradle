@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'livroemprestator'
             keyPassword 'bac92935330@'
-            //storeFile file('E:/BRUNO/Android/KeyStore/LIvroEmprestator.jks')
+            storeFile file('C:/LIvroEmprestator.jks')
             storePassword 'bac92935330@'
         }
     }
@@ -25,6 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
     }
 }
 
@@ -38,6 +41,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.android.gms:play-services-auth:10.0.1'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.android.support:design:25.3.1'

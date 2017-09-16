@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_item_mapa_bibliotecas"
+        android:title="Bibliotecas"
+        android:icon="@drawable/googleg_standard_color_18"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_item_configuracoes"
         android:title="Configurações"
         android:icon="@drawable/ic_settings_black_24dp"

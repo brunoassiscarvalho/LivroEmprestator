@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.m3rcurio.livroemprestator"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="br.com.m3rcurio.livroemprestator">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    ...
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,20 +40,23 @@
             </intent-filter>
         </activity>
 
-        <meta-data tools:replace="android:value"
+        <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
-            />
-
-        <activity android:name=".DetalheLivroActivity" />
-        <activity android:name=".UsuarioTagsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".BasicaActivity" />
+            tools:replace="android:value" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <receiver
             android:name=".AlarmReceiver"
             android:process=":remote" />
 
+        <activity android:name=".DetalheLivroActivity" />
+        <activity android:name=".UsuarioTagsActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".BasicaActivity" />
+        <activity android:name=".MapaBibliotecasActivity"></activity>
     </application>
 
 </manifest>
