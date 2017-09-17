@@ -10,7 +10,7 @@
     <string name="estante">Estante</string>
     <string name="opcoes">Opções</string>
     <string-array name="tipoIteracoes">
-        <item/>
+        <item />
         <item>Pediu Emprestado</item>
         <item>Emprestou</item>
         <item>Recebeu</item>

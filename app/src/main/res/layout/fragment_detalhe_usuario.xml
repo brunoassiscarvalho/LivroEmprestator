@@ -7,16 +7,6 @@
     android:background="@color/colorBackground"
     tools:context=".DetalheUsuarioFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar_perfilUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/colorAccent"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp" />
 
     <ImageView
         android:id="@+id/perfilUsuarioImagem"

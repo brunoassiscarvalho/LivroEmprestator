@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -91,9 +94,16 @@ public class DetalheLivroActivity extends AppCompatActivity {
         TextView detalheLivroSubTitulo = (TextView) findViewById(R.id.detalheLivroSubTitulo);
         TextView detalheLivroAutor = (TextView) findViewById(R.id.detalheLivroAutor);
         TextView detalheLivroResumo =(TextView) findViewById(R.id.detalheLivroResumo);
+        ImageView imagemLivro = (ImageView) findViewById(R.id.detalheLivroImage);
         detalheLivroTitulo.setText(livro.getTitulo());
         detalheLivroSubTitulo.setText(livro.getSubTitulo());
         detalheLivroResumo.setText(livro.getResumo());
+        Glide.with(getBaseContext())
+                .load(livro.getUrlImagem())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .centerCrop()
+                .into(imagemLivro);
 
     }
 }

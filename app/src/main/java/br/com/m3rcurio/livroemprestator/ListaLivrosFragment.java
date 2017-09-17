@@ -1,5 +1,6 @@
 package br.com.m3rcurio.livroemprestator;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -49,6 +50,8 @@ public class ListaLivrosFragment extends Fragment {
     //dados da rota
     private static final String ARG_ROTA = "";
     public String rota;
+
+    private ProgressDialog pDialog;
 
     private ListaLivrosRecyclerViewAdapter recycleViewAdapter;
 
@@ -135,12 +138,21 @@ public class ListaLivrosFragment extends Fragment {
 
     }
 
-    public class getDataLivros extends AsyncTask<String, String, String> {
+    public class getDataLivros extends AsyncTask<Object, Object, Void> {
 
         HttpURLConnection urlConnection;
 
         @Override
-        protected String doInBackground(String... args) {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Carregado...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Object... arg0) {
 
             StringBuilder result = new StringBuilder();
 
@@ -190,7 +202,9 @@ public class ListaLivrosFragment extends Fragment {
                     }
                     livro.setUrlImagem(imagem);
                     livro.setResumo(volumeInfo.getString("description"));
-                    listaLivros.add(livro);
+                    //listaLivros.add(livro);
+                    publishProgress(livro);
+                    //recycleViewAdapter.updateItem(i);
                 }
             }catch( Exception e) {
                 e.printStackTrace();
@@ -200,10 +214,23 @@ public class ListaLivrosFragment extends Fragment {
                 urlConnection.disconnect();
                 // Log.e(TAG, "Json Livros " + result.toString());
             }
-            return result.toString();
+
+            return null;
         }
+
         @Override
-        protected void onPostExecute(String result) {
+        protected void onProgressUpdate(Object... values) {
+            super.onProgressUpdate(values);
+            listaLivros.add((Livros)values[0]);
+            recycleViewAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
             recycleViewAdapter.notifyDataSetChanged();
         }
     }
@@ -277,5 +304,16 @@ public class ListaLivrosFragment extends Fragment {
         public int getItemCount() {
             return listaLivros.size();
         }
+
+        private void updateItem(int position) {
+
+            notifyItemChanged(position);
+        }
+
+
     }
+
+
+
+
 }

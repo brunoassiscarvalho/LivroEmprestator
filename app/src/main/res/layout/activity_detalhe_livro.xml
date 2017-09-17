@@ -34,7 +34,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/listaLivroImage"
+                android:id="@+id/detalheLivroImage"
                 android:layout_width="50dp"
                 android:layout_height="75dp"
                 android:layout_gravity="center_vertical"

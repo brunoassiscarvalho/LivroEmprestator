@@ -62,7 +62,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
                                 selectedFragment = ListaLivrosFragment.newInstance("rotaPerfilUsuario", interacao);
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = ListaIteracoesFragment.newInstance();
+                                selectedFragment = UsuarioPreferenciasFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
