@@ -219,7 +219,13 @@ public class IteracoesFragment extends Fragment {
                 Log.e(TAG, "usuario recupera: "+usuarioRetorno.getEmail());
 
                 TextView apelido = (TextView) view.findViewById(R.id.listaUsuarioApelido);
-                ImageView usuarioImagem = (ImageView) view.findViewById(R.id.listaLivroImage);
+                ImageView usuarioImagem = (ImageView) view.findViewById(R.id.listaUsuariooImage);
+                Glide.with(getContext())
+                        .load(usuarioRetorno.getUrlImagem())
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .centerCrop()
+                        .into(usuarioImagem);
                 apelido.setText(usuarioRetorno.getApelido());
             }
             @Override
@@ -354,24 +360,4 @@ public class IteracoesFragment extends Fragment {
         }
     }
 
-    private void buscarInteracao(final String idInteracao, String idUsuario){
-
-        bancoDados = FirebaseDatabase.getInstance().getReference().child("interacaoPorUsuario").child(idUsuario);
-        bancoDados.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Interacoes interacaoRetorno = dataSnapshot.getValue(Interacoes.class);
-                if(interacaoRetorno.getId().equals(idInteracao)){
-                    interacao = interacaoRetorno;
-                }
-                Log.e(TAG, "usuario recupera: "+interacaoRetorno.getStatus());
-
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
 }

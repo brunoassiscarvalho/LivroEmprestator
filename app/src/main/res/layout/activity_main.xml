@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:layout_margin="0dp"
     tools:context="br.com.m3rcurio.livroemprestator.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -37,7 +38,6 @@
         app:itemIconTint="@color/nav_item_state_list"
         app:itemTextColor="@color/nav_item_state_list"
         app:menu="@menu/bottom_navigation_items" />
-
 
 </RelativeLayout>
 

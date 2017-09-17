@@ -5,7 +5,5 @@ package br.com.m3rcurio.livroemprestator.model;
  */
 
 public class Autor extends Pessoas{
-   public Autor(String nome){
 
-   }
 }

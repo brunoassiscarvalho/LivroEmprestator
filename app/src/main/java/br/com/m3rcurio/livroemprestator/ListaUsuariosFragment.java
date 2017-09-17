@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -72,7 +74,8 @@ public class ListaUsuariosFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.listaUsuariosRecyclerView);
         recyclerView.setAdapter(recycleViewAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        recyclerView.setLayoutManager( new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL, false));
+
 
         if(rota.equals("rotaLivro")){
             listaUsuariosPorLivro(interacao.getLivro(),user);
@@ -166,7 +169,7 @@ public class ListaUsuariosFragment extends Fragment {
         public ListaUsuariosViewHolder(View itemView) {
             super(itemView);
             this.apelido = (TextView) itemView.findViewById(R.id.listaUsuarioApelido);
-            this.usuarioImagem = (ImageView) itemView.findViewById(R.id.listaLivroImage);
+            this.usuarioImagem = (ImageView) itemView.findViewById(R.id.listaUsuariooImage);
 
             itemView.setOnClickListener(this);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) itemView.getLayoutParams();
@@ -210,12 +213,12 @@ public class ListaUsuariosFragment extends Fragment {
             holder.apelido.setText(usuario.getApelido());
             // holder.livroSubTitulo.setText(usuario.getSubTitulo());
             // holder.livroAutor.setText(usuario.getExbicaoAutores());
-           /* Glide.with(context)
+            Glide.with(context)
                     .load(usuario.getUrlImagem())
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .centerCrop()
-                    .into(holder.livroImagem);*/
+                    .into(holder.usuarioImagem);
             holder.usuario = usuario;
         }
 

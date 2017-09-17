@@ -1,5 +1,6 @@
 package br.com.m3rcurio.livroemprestator.model;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ public class Pessoas {
     private String apelido;
     private String email;
     private List<String> listaLivros;
+    private String UrlImagem;
 
     public String getId() {
         return id;
@@ -52,5 +54,9 @@ public class Pessoas {
     public void setListaLivros(List<String> listaLivros) {
         this.listaLivros = listaLivros;
     }
+
+    public String getUrlImagem() { return UrlImagem; }
+
+    public void setUrlImagem(String urlImagem) { UrlImagem = urlImagem; }
 }
 

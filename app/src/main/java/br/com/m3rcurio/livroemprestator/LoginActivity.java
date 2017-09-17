@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
 
                     Log.d(TAG, "Usuario Logado:" + user.getUid());
                     Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
-
+                    usuario.setUrlImagem(user.getPhotoUrl().toString());
                     DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
                     usuarioFireBase.setValue(usuario);
                     //recuperaDadosUsuario(usuario.getId(), usuarioFireBase);
@@ -153,11 +153,12 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
                             //salva usuario na lista
                             FirebaseUser user = mAuth.getCurrentUser();
                             Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            usuario.setUrlImagem(user.getPhotoUrl().toString());
+                            Log.e(TAG, "Imagem login"+ user.getPhotoUrl().toString());
                             DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
                             usuarioFireBase.setValue(usuario);
-                            // vai para a main
                             Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                            intent.putExtra("usuarioLogado", usuario);
+
                             intent.putExtra("itemSelecionado", 1);
                             startActivity(intent);
                         } else {
@@ -185,6 +186,7 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
                             Log.d(TAG, "Sucesso Firebase com google:" + task.isSuccessful());
                             FirebaseUser user = mAuth.getCurrentUser();
                             Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            usuario.setUrlImagem(user.getPhotoUrl().toString());
                             DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
                             usuarioFireBase.setValue(usuario);
                         }else{
@@ -214,6 +216,7 @@ public class LoginActivity extends AppCompatActivity implements  GoogleApiClient
                             Log.d(TAG, "Logado no Facebook");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Usuarios usuario = new Usuarios(user.getUid(), user.getDisplayName(),user.getDisplayName(),user.getEmail());
+                            usuario.setUrlImagem(user.getPhotoUrl().toString());
                             DatabaseReference usuarioFireBase = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(usuario.getId());
                             usuarioFireBase.setValue(usuario);
                         } else {

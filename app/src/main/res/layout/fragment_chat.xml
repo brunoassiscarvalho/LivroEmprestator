@@ -3,13 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:layout_margin="10dp"
     tools:context="br.com.m3rcurio.livroemprestator.ChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <RelativeLayout
         android:id="@+id/relative_layout_chat"
@@ -25,6 +22,7 @@
             android:tint="@android:color/white"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
             app:fabSize="mini" />
 
         <android.support.design.widget.TextInputLayout
@@ -39,6 +37,10 @@
                 android:layout_height="wrap_content"
                 android:hint="Input"
                 android:id="@+id/input"
+                android:textColor="@color/colorAccent"
+                android:background="@color/corBranca"
+                android:layout_margin="10dp"
+                android:padding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
 
