@@ -86,9 +86,11 @@ public class ListaLivrosFragment extends Fragment {
 
         if(rota.equals("rotaLivro")){
             new getDataLivros().execute();
-        }else{
+        }else if(rota.equals("rotaUsuario")){
             Log.e(TAG, "rotaUsuario");
             listaLivrosDoUsuario(interacao.getUsuarioEmprestador());
+        }else if(rota.equals("rotaPerfilUsuario")){
+            listaLivrosDoUsuario(interacao.getUsuarioLeitor());
         }
 
 
@@ -229,13 +231,15 @@ public class ListaLivrosFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(ListaLivrosFragment.this.getActivity(), DetalheLivroActivity.class);
-            // Log.e(TAG,"Livro "+this.livro.getTitulo() +" / Usuario "+interacao.getUsuario().getNome());
-            interacao.setLivro(livro.getId());
-            intent.putExtra("interacao", interacao);
-            intent.putExtra("rota",rota);
-            intent.putExtra("livro",this.livro);
-            startActivity(intent);
+            if(!rota.equals("rotaPerfilUsuario")) {
+                Intent intent = new Intent(ListaLivrosFragment.this.getActivity(), DetalheLivroActivity.class);
+                // Log.e(TAG,"Livro "+this.livro.getTitulo() +" / Usuario "+interacao.getUsuario().getNome());
+                interacao.setLivro(livro.getId());
+                intent.putExtra("interacao", interacao);
+                intent.putExtra("rota", rota);
+                intent.putExtra("livro", this.livro);
+                startActivity(intent);
+            }
         }
     }
 

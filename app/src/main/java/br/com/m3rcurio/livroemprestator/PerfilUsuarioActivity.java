@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 
+import br.com.m3rcurio.livroemprestator.model.Interacoes;
+
 public class PerfilUsuarioActivity extends AppCompatActivity {
 
 
@@ -55,7 +57,9 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
                                 selectedFragment = DetalheUsuarioFragment.newInstance();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = EstanteUsuarioFragment.newInstance();
+                                Interacoes interacao = new Interacoes();
+                                interacao.setUsuarioLeitor(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                selectedFragment = ListaLivrosFragment.newInstance("rotaPerfilUsuario", interacao);
                                 break;
                             case R.id.action_item3:
                                 selectedFragment = ListaIteracoesFragment.newInstance();

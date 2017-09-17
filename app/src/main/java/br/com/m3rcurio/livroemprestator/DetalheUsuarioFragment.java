@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -58,6 +61,15 @@ public class DetalheUsuarioFragment extends Fragment implements GoogleApiClient.
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
         txtPerfilApelido.setText(usuarioAtual.getDisplayName());
         txtPerfilEmail.setText(usuarioAtual.getEmail());
+        ImageView imagemUsuario = (ImageView) v.findViewById(R.id.perfilUsuarioImagem);
+
+
+        Glide.with(getContext())
+                .load(usuarioAtual.getPhotoUrl().toString())
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .centerCrop()
+                .into(imagemUsuario);
 
         Button botao = (Button) v.findViewById(R.id.sair);
 
@@ -68,6 +80,10 @@ public class DetalheUsuarioFragment extends Fragment implements GoogleApiClient.
                     saiGoogle();
                     sairFacebook();
                     FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(DetalheUsuarioFragment.this.getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finishAffinity();
+
               //  }catch(Exception e){
 
               //  }
@@ -79,6 +95,7 @@ public class DetalheUsuarioFragment extends Fragment implements GoogleApiClient.
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null){
             LoginManager.getInstance().logOut();
         }
+
     }
 
     private void saiGoogle() {

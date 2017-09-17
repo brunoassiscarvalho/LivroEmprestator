@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
         android:animateLayoutChanges="true"
-        android:layout_below="@+id/my_toolbar">
+        android:layout_below="@+id/toolbarPerfilUsuario">
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
