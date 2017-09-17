@@ -31,7 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.drawable.ic_local_library_black_24dp)
                         .setContentTitle(nomeApp)
-                        .setContentText("1o dias com: "+tituloLivro);
+                        .setContentText("5 dias com: "+tituloLivro);
         Intent resultIntent = new Intent(context, LoginActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(LoginActivity.class);
