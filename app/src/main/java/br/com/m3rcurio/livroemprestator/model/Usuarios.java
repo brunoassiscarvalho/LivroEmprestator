@@ -17,6 +17,7 @@ public class Usuarios extends Pessoas implements Serializable {
     }
 
     public Usuarios(String id, String apelido, String nome, String email){
+
         super.setId(id);
         super.setApelido(apelido);
         super.setNome(nome);

@@ -8,12 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -21,11 +24,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.m3rcurio.livroemprestator.model.Interacoes;
+import br.com.m3rcurio.livroemprestator.model.Usuarios;
 
 public class ListaIteracoesFragment extends Fragment {
 
@@ -33,6 +38,7 @@ public class ListaIteracoesFragment extends Fragment {
     private ListaInteracoesRecyclerViewAdapter recycleViewAdapter;
     private DatabaseReference bancoDados;
     private String[] tipoIteracoes;
+    private String TAG = "LISTA INTERAÇõES";
 
 
     public ListaIteracoesFragment() {
@@ -55,7 +61,7 @@ public class ListaIteracoesFragment extends Fragment {
         Resources res = getResources();
         tipoIteracoes = res.getStringArray(R.array.tipoIteracoes);
 
-        View view = inflater.inflate(R.layout.fragment_lista_iteracoes, container, false);
+        final View view = inflater.inflate(R.layout.fragment_lista_iteracoes, container, false);
         recycleViewAdapter = new ListaInteracoesRecyclerViewAdapter(this.getActivity(), listaIteracoes);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.listaInteracoesRecyclerView);
         recyclerView.setAdapter(recycleViewAdapter);
@@ -70,6 +76,10 @@ public class ListaIteracoesFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Interacoes interacoes = dataSnapshot.getValue(Interacoes.class);
                 listaIteracoes.add(interacoes);
+
+                buscarImagemUsuarioLeitor(interacoes.getUsuarioLeitor(), view);
+                buscarImagemUsuarioEmprestador(interacoes.getUsuarioEmprestador(), view);
+
                 recycleViewAdapter.notifyDataSetChanged();
             }
 
@@ -98,16 +108,14 @@ public class ListaIteracoesFragment extends Fragment {
     }
 
     public class ListaInteracoesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView usuarioImagem;
         public TextView descricaoTipoInteracao;
-        public ImageView livroImagem;
         public Interacoes interacao;
 
         public ListaInteracoesViewHolder(View itemView) {
             super(itemView);
-            this.usuarioImagem = (ImageView) itemView.findViewById(R.id.listaIteracoesUsuarioImage);
+
             this.descricaoTipoInteracao = (TextView) itemView.findViewById(R.id.listaIteracoesTipo);
-            this.livroImagem = (ImageView) itemView.findViewById(R.id.listaIteracoesLivroImage);
+
 
             itemView.setOnClickListener(this);
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) itemView.getLayoutParams();
@@ -144,12 +152,57 @@ public class ListaIteracoesFragment extends Fragment {
             Interacoes interacoes = listaIteracoes.get(position);
             holder.descricaoTipoInteracao.setText(tipoIteracoes[interacoes.getStatus()]);
             holder.interacao = interacoes;
+
         }
 
         @Override
         public int getItemCount() {
             return listaIteracoes.size();
         }
+    }
+
+    private void buscarImagemUsuarioLeitor(String idUsuario, View v){
+        final View view = v;
+        bancoDados = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(idUsuario);
+        bancoDados.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuarios usuarioRetorno = dataSnapshot.getValue(Usuarios.class);
+                ImageView imagem = (ImageView)view.findViewById(R.id.listaIteracoesUsuarioLeitorImagem);
+                Log.e(TAG, "usuario recupera: "+usuarioRetorno.getEmail());
+                Glide.with(getContext())
+                        .load(usuarioRetorno.getUrlImagem())
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .centerCrop()
+                        .into(imagem);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void buscarImagemUsuarioEmprestador(String idUsuario, View v){
+        final View view = v;
+        bancoDados = FirebaseDatabase.getInstance().getReference().child("listaUsuarios").child(idUsuario);
+        bancoDados.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuarios usuarioRetorno = dataSnapshot.getValue(Usuarios.class);
+                ImageView imagem = (ImageView)view.findViewById(R.id.listaIteracoesUsuarioEmprestadorImagem);
+                Log.e(TAG, "usuario recupera: "+usuarioRetorno.getEmail());
+                Glide.with(getContext())
+                        .load(usuarioRetorno.getUrlImagem())
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .centerCrop()
+                        .into(imagem);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 }

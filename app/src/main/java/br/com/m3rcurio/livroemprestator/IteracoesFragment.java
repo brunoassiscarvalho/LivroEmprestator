@@ -41,6 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.m3rcurio.livroemprestator.model.Interacoes;
@@ -54,6 +55,7 @@ public class IteracoesFragment extends Fragment {
     private DatabaseReference bancoDados;
     private Interacoes interacao;
     private String codLivro;
+    private Livros livro;
 
     private List<Livros> listaLivros = new ArrayList<>();
     private ListaLivrosRecyclerViewAdapter recycleViewAdapter;
@@ -80,6 +82,7 @@ public class IteracoesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        livro = new Livros();
         View v = inflater.inflate(R.layout.fragment_iteracoes, container, false);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -124,13 +127,6 @@ public class IteracoesFragment extends Fragment {
             }
         }else if(interacao.getStatus()==2 ){
             if(interacao.getUsuarioEmprestador().equals(user.getUid())){
-                AlarmManager alarmMgr = (AlarmManager) this.getActivity().getSystemService(Context.ALARM_SERVICE);
-
-                Intent intent = new Intent(this.getActivity(), AlarmReceiver.class);
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity().getBaseContext(), 0, intent, 0);
-
-                alarmMgr.set(AlarmManager.RTC ,  SystemClock.elapsedRealtime() + 60 * 1000, alarmIntent);
-                Log.e(TAG, "Criado o alarme" );
                 barraBotoes.setVisibility(View.GONE);
             }
         }else if(interacao.getStatus()==3 ){
@@ -160,6 +156,28 @@ public class IteracoesFragment extends Fragment {
                 usuarioFireBase.child("interacaoPorUsuario").child(interacao.getUsuarioLeitor()).child(interacao.getId()).setValue(interacao);
                 usuarioFireBase.child("interacaoPorUsuario").child(interacao.getUsuarioEmprestador()).child(interacao.getId()).setValue(interacao);
                 Log.e(TAG,"iteração id"+interacao.getId());
+
+                if(interacao.getStatus()==3){
+
+                    AlarmManager alarmMgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+                    Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+                    intent.putExtra("tituloLivro",livro.getTitulo());
+                    PendingIntent alarmIntent = PendingIntent.getBroadcast(getActivity().getBaseContext(), 0, intent, 0);
+
+                    Calendar calendar = Calendar.getInstance();
+                    // calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.set(Calendar.HOUR_OF_DAY, 14);
+                    calendar.add( Calendar.DAY_OF_MONTH , 5 );
+                    long inicio = calendar.getTimeInMillis();
+                    alarmMgr.set(AlarmManager.RTC ,  inicio, alarmIntent);
+
+                   // alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,  SystemClock.elapsedRealtime() + 10 * 1000, alarmIntent);
+                    Log.e(TAG, "Criado o alarme" );
+
+                }
+
+
                 barraBotoes.setVisibility(View.GONE);
                 barraResposta.setVisibility(View.VISIBLE);
             }
@@ -201,7 +219,13 @@ public class IteracoesFragment extends Fragment {
                 Log.e(TAG, "usuario recupera: "+usuarioRetorno.getEmail());
 
                 TextView apelido = (TextView) view.findViewById(R.id.listaUsuarioApelido);
-                ImageView usuarioImagem = (ImageView) view.findViewById(R.id.listaLivroImage);
+                ImageView usuarioImagem = (ImageView) view.findViewById(R.id.listaUsuariooImage);
+                Glide.with(getContext())
+                        .load(usuarioRetorno.getUrlImagem())
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .centerCrop()
+                        .into(usuarioImagem);
                 apelido.setText(usuarioRetorno.getApelido());
             }
             @Override
@@ -214,7 +238,7 @@ public class IteracoesFragment extends Fragment {
     public class getDataLivros extends AsyncTask<String, String, String> {
 
         HttpURLConnection urlConnection;
-        Livros livro = new Livros();
+
 
         @Override
         protected String doInBackground(String... args) {
@@ -336,24 +360,4 @@ public class IteracoesFragment extends Fragment {
         }
     }
 
-    private void buscarInteracao(final String idInteracao, String idUsuario){
-
-        bancoDados = FirebaseDatabase.getInstance().getReference().child("interacaoPorUsuario").child(idUsuario);
-        bancoDados.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Interacoes interacaoRetorno = dataSnapshot.getValue(Interacoes.class);
-                if(interacaoRetorno.getId().equals(idInteracao)){
-                    interacao = interacaoRetorno;
-                }
-                Log.e(TAG, "usuario recupera: "+interacaoRetorno.getStatus());
-
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
 }
