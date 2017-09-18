@@ -133,6 +133,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.action_item_mapa_bibliotecas) {
+            Intent intent = new Intent(getBaseContext(), MapaBibliotecasActivity.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
