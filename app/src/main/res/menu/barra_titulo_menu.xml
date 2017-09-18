@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_item_mapa_bibliotecas"
         android:title="Bibliotecas"
-        android:icon="@drawable/googleg_standard_color_18"
+        android:icon="@drawable/ic_map_black_24dp"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_item_configuracoes"
